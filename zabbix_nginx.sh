@@ -1,4 +1,5 @@
 #!/bin/bash
+#zabbix nginx conect info mornitor
 mkdir -p /etc/zabbix/scripts
 cat >/etc/zabbix/scripts/nginx_monitor.sh<<EOF
 #!/bin/bash
