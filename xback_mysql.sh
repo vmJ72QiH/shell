@@ -14,6 +14,9 @@ backupbin=/usr/bin
 backdir=/database/detect/backup
 redun=/database/detect/redundency
 file_cnf=/etc/my.cnf
+#用户需要进mysql授权
+#grant reload,lock tables,replication client,create tablespace,process,super on *.* to 自己设置@'localhost' identified by '自己设置';
+#FLUSH   PRIVILEGES;
 user_name=自己设置
 password="自己设置"
 socket="/var/lib/mysql/mysql.sock"
