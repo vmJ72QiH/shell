@@ -70,7 +70,8 @@ if [ -z "$NGINX_STATUS" ];then
 	sed -i '/#error_page/i\        stub_status on;' /etc/nginx/conf.d/default.conf
 	sed -i '/#error_page/i\        access_log off;' /etc/nginx/conf.d/default.conf
 	sed -i '/#error_page/i\        allow 127.0.0.1;' /etc/nginx/conf.d/default.conf
-	sed -i '/#error_page/i\        allow 152.101.131.150;' /etc/nginx/conf.d/default.conf
+	#zabbx-server ip
+	sed -i '/#error_page/i\        allow zabbix_server;' /etc/nginx/conf.d/default.conf
 	sed -i '/#error_page/i\        deny all;' /etc/nginx/conf.d/default.conf
 	sed -i '/#error_page/i\    }' /etc/nginx/conf.d/default.conf
 fi
