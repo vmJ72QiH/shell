@@ -1,0 +1,26 @@
+yum install -y ipset
+#黑名单
+#创建一个black表
+ipset create blacklist hash:ip hashsize 4096 maxelem 100000 timeout 3600
+#修改iptables规则
+#iptables文件添加
+-A INPUT -m set --match-set black src -j DROP
+#----------------------------------------------
+#白名单
+ipset create whitelist hash:ip hashsize 4096 maxelem 100000 timeout 3600
+-A INPUT -m set ! --match-set white src -j DROP
+#----常用命令
+ipset add listname ip
+ipset del yoda x.x.x.x # 从 yoda 集合中删除内容
+ipset list yoda # 查看 yoda 集合内容
+ipset list # 查看所有集合的内容
+ipset flush yoda # 清空 yoda 集合
+ipset flush # 清空所有集合
+ipset destroy yoda # 销毁 yoda 集合
+ipset destroy # 销毁所有集合
+ipset save yoda # 输出 yoda 集合内容到标准输出
+ipset save # 输出所有集合内容到标准输出
+ipset restore # 根据输入内容恢复集合内容
+ipset ! add 增加IP的时候忽略错误
+#计划任务
+*/1 * * * * bash /path/to/ipset_black.sh
