@@ -23,10 +23,15 @@ socket="/var/lib/mysql/mysql.sock"
 out_log=$backdir/xtrabackup_log_$format_time
 time_cost=$backdir/xtrabackup_time.txt
 
-#创建数据存放目录
+#创建数据存放目录1
 if [ ! -d "/database/detect/redundency" ];
 then 
 mkdir -p /database/detect/redundency
+fi
+#创建数据存放目录2
+if [ ! -d "/database/detect/backup" ];
+then 
+mkdir -p /database/detect/backup
 fi
 
 #判断是否为一周轮转，是则打包上周的数据 并删除上上周的压缩包
