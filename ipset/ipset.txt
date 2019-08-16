@@ -9,6 +9,7 @@ ipset create blacklist hash:ip hashsize 4096 maxelem 100000 timeout 3600
 #白名单
 ipset create whitelist hash:ip hashsize 4096 maxelem 100000 timeout 3600
 -A INPUT -m set ! --match-set white src -j DROP
+也可以用ACCEPT
 #----常用命令
 ipset add listname ip
 ipset del yoda x.x.x.x # 从 yoda 集合中删除内容
