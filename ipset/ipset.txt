@@ -26,3 +26,4 @@ ipset -! add 增加IP的时候忽略错误
 */1 * * * * bash /path/to/ipset_black.sh
 #加入到开机启动文件/etc/profile
 /usr/sbin/ipset restore -f /etc/ipset.conf
+/usr/bin/systemctl restart iptables

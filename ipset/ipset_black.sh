@@ -8,4 +8,9 @@ for i in `cat /tmp/blackiplist.txt`
 do
 /sbin/ipset -! add forbidip $i timeout 3600
 done
-#每天保存一次规则
+#每天0点保存一次规则
+currentHour=$(date +%H)
+if [ $currentHour -eq 00 ]
+then
+    /sbin/ipset save > /etc/ipset.conf;
+fi
