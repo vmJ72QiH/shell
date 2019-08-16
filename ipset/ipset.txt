@@ -21,6 +21,6 @@ ipset destroy # 销毁所有集合
 ipset save yoda # 输出 yoda 集合内容到标准输出
 ipset save # 输出所有集合内容到标准输出
 ipset restore # 根据输入内容恢复集合内容
-ipset ! add 增加IP的时候忽略错误
+ipset -! add 增加IP的时候忽略错误
 #计划任务
 */1 * * * * bash /path/to/ipset_black.sh
