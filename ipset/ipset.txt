@@ -24,3 +24,5 @@ ipset restore # 根据输入内容恢复集合内容
 ipset -! add 增加IP的时候忽略错误
 #计划任务
 */1 * * * * bash /path/to/ipset_black.sh
+#加入到开机启动文件/etc/profile
+/usr/sbin/ipset restore -f /etc/ipset.conf
