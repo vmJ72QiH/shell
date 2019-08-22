@@ -1,0 +1,9 @@
+#服务器缓存刷新
+#手动执行sync命令（描述：sync 命令运行 sync 子例程。如果必须停止系统，则运行sync 命令以确保文件系统的
+#完整性。sync 命令将所有未写的系统缓冲区写到磁盘中，包含已修改的 i-node、已延迟的块 I/O 和
+#读写映射文件）
+sync
+#可以通过调整/proc/sys/vm/drop_caches来释放内存
+echo 3 > /proc/sys/vm/drop_caches
+#free -m 内存确实减少了再恢复成默认值
+echo 0 > /proc/sys/vm/drop_caches
