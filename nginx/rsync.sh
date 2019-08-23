@@ -1,5 +1,6 @@
 #!bin/bash
 #rsync免密传输要先做单向免密
+#serverlist.txt写服务器IP
 function nginx_restart(){
 ssh $i "/usr/sbin/nginx -t && systemctl restart nginx"
 if [ $? !=  0 ];then
