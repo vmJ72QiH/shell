@@ -1,9 +1,9 @@
 #fail2ban
-#功能：限制非法IP登陆
+#功能：限制非法IP登陆 需要安装iptables-services
 #参考https://idc.wanyunshuju.com/li/8.html
-
-yum install -y shorewall gamin-python shorewall-shell shorewall-perl shorewall-common python-inotify python-ctypes fail2ban
-
+yum install -y epel-release
+yum install -y fail2ban
+#再/etc/fail2ban/下新增以下配置文件
 [root@localhost fail2ban]# cat jail.local 
 [DEFAULT]
 bantime = 60000
@@ -18,3 +18,7 @@ maxretry = 2
 
 systemctl start fail2ban
 systemctl enable fail2ban
+#iptables -nL 出现以下即为ok
+Chain f2b-SSH (1 references)
+target     prot opt source               destination         
+RETURN     all  --  0.0.0.0/0            0.0.0.0/0   
