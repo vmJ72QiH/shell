@@ -1,0 +1,11 @@
+https://www.cnblogs.com/lei0213/p/8723106.html
+#Chrony
+yum install -y chrony
+systemctl start chronyd
+systemctl enable chronyd
+
+日常使用
+# 设置亚洲时区
+timedatectl set-timezone Asia/Shanghai
+# 启用NTP同步
+timedatectl set-ntp yes
