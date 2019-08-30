@@ -1,0 +1,18 @@
+转载
+https://www.cnblogs.com/renping/p/9862127.html
+https://blog.csdn.net/q871761987/article/details/72230355
+https://blog.csdn.net/woodcorpse/article/details/82052209
+http://zlib.net/pigz/        ##官网
+
+压缩：
+tar --use-compress-program=pigz -cvpf  /目录名/文件名.tgz    （空格） /boot（压缩的文件或者目录）
+--use-compress-program=pigz  是指定 （ pigz ）来进行压缩
+-cvpf   -c    创建压缩文件    -v    显示压缩或解压的过程    -p    保留原始的权限与属性  -f    目标文件名   
+--exclude=/xx  排除这个目录不压缩
+
+
+解压：
+tar --use-compress-program=pigz -xvpf 文件.tgz -C  / （这是指定解压到了跟 目录）
+--use-compress-program=pigz  是指定 （ pigz ）来进行解压
+-xvpf  -x    解开压缩文件    -v    显示压缩或解压的过程    -p    保留原始的权限与属性  -f    目标文件名   
+-C    指定解压到的目录
