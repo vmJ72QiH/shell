@@ -10,8 +10,8 @@ wget -q -o /dev/null http://mirrors.aliyun.com/repo/epel-7.repo
 rm -rf Centos-7.repo 
     
 
-echo "sysstat ntp net-snmp lrzsz rsync"
-yum -y install sysstat ntp net-snmp lrzsz rsync vim openssh-clients net-tools > /dev/null 2>&1    
+echo "sysstat ntp net-snmp lrzsz rsync nslookup" 
+yum -y install sysstat ntp net-snmp lrzsz rsync vim openssh-clients net-tools bind-utils > /dev/null 2>&1    
 
 echo "#close selinux iptables"
 cp /etc/selinux/config /etc/selinux/config.$(date +%y%m%d)
