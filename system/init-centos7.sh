@@ -109,6 +109,7 @@ sed -i 's/GRUB_CMDLINE_LINUX=\"/&\"ipv6.disable=1\" /' /etc/default/grub
 grub2-mkconfig -o /boot/grub2/grub.cfg
 }
 
+
 yum_repo
 packages_install
 selinux_set
@@ -118,3 +119,5 @@ sysctl_set
 profile_set
 sshd_set
 ipv6_set
+#重置变量a
+unset a
