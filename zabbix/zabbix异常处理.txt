@@ -1,0 +1,10 @@
+#zabbix 异常处理
+zabbix_agentd 启动报错处理
+
+zabbix_agentd [2625]: cannot create PID file [/var/run/zabbix/zabbix_agentd.pid]: [2] No such file or directory
+
+mkdir /var/run/zabbix
+touch /var/run/zabbix/zabbix_agentd.pid
+chown root:zabbix /var/run/zabbix
+chmod 0775 /var/run/zabbix
+#chcon -u system_u -t zabbix_var_run_t /var/run/zabbix  这个选择执行
