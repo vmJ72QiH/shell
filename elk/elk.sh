@@ -134,9 +134,9 @@ nginx -s reload
 tail -f /var/log/nginx/access.log
 #centos6 修改主机名
 vi /etc/sysconfig/network
-HOSTNAME=yisu-nginx-A
+HOSTNAME=aaa
 
-hostname yisu-nginx-A
+hostname aaa
 #检测hostname
 hostname
 #hosts文件与主机名修改无关,仅为解析使用  一般不用改有特殊需要可以改
