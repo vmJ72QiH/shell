@@ -118,6 +118,7 @@ log_format log_json '{ "time_local": "$time_local", '
 	'"remote_addr": "$remote_addr", '
 	'"referer": "$http_referer", '
 	'"request": "$request", '
+	'"httprequest": "$http_referer", '
 	'"status": $status, '
 	'"bytes": $body_bytes_sent, '
 	'"agent": "$http_user_agent", '
@@ -172,3 +173,30 @@ ps -ef | grep filebeat
 
 
 
+----------------------------扩展  添加map需要的logstash配置
+#新版本自带geo插件
+input {
+  beats {
+    port => "5044"
+    codec => json
+  }
+}
+filter {
+  geoip {
+    source => "remote_addr"
+    target => "geoip"
+    add_field => [ "[geoip][coordinates]", "%{[geoip][longitude]}" ]
+    add_field => [ "[geoip][coordinates]", "%{[geoip][latitude]}" ]
+  }
+  mutate {
+    convert => [ "[geoip][coordinates]", "float"]
+       }
+}
+
+output {
+    elasticsearch {
+       hosts =>["192.168.176.139:9200"]
+       index =>"logstash-nginx-log-%{+YYYY.MM.dd}"
+    }
+}
+--------------------------------------------------------------------------
