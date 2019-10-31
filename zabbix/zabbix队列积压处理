@@ -1,0 +1,9 @@
+#zabbix 队列积压处理
+#参考
+https://www.itnotebooks.com/?p=945
+
+vim /etc/sysctl.conf
+#新增或修改以下参数
+
+net.netfilter.nf_conntrack_max = 262144
+net.nf_conntrack_max = 262144
