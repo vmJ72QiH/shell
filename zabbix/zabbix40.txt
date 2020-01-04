@@ -75,7 +75,7 @@ $ quit;
 
 zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -uzabbix -p zabbix
 
-vim etc/zabbix/zabbix_server.conf
+vim /etc/zabbix/zabbix_server.conf
 DBHost=localhost  数据库地址
 DBName=zabbix  数据库名字
 DBUser=zabbix  数据库用户名
