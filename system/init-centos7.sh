@@ -20,7 +20,7 @@ rm -rf Centos-7.repo
 # sed -i 's/1024/unlimited/g' /etc/security/limits.d/90-nproc.conf
 
 packages_install() {
-for i in epel-release sysstat pcre-devel net-snmp zlib zlib-devel rsync openssl perl gcc net-tools bind-utils iftop bind-utils iptables-services net-tools vim wget psmisc;do yum -y install $i ;done
+for i in bash-completion-extras bash-completion epel-release sysstat pcre-devel net-snmp zlib zlib-devel rsync openssl perl gcc net-tools bind-utils iftop bind-utils iptables-services net-tools vim wget psmisc;do yum -y install $i ;done
 }
 
 selinux_set() {

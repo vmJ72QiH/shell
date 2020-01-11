@@ -1,0 +1,36 @@
+gitlab
+#官网 https://about.gitlab.com/
+#安装前确认selinux Firewalld iptables关闭
+yum install -y curl policycoreutils-python openssh-server
+curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.rpm.sh | sudo bash
+EXTERNAL_URL="http://192.168.116.128" yum install -y gitlab-ee
+gitlab-ctl status
+
+
+#ssh-keygen -t rsa 生成ssh秘钥
+#首次登陆要设置密码 默认用户为root
+
+
+登录页内容设置
+Admin Area>Appearance>Sign in/Sign up pages
+
+
+创建组   Admin Area> Groups>New Groups>写个标题就可以直接创建
+创建项目 Admin Area>Project name>New project>Project URL 选择组>SSH key 复制gitlab公钥
+         按照提示操作，
+		 Create a new repository                #没有仓库的按这个
+		 Push an existing folder                #已有目录按这个
+		 Push an existing Git repository        #已有仓库按这个
+		 git remote add origin git@192.168.116.128:test/git_data.git
+		 这个操作之后可以直接
+		 git push -u origin master
+		 
+		 
+限制注册 Admin Area>setting>Sign-up restrictions
+
+
+
+
+
+
+

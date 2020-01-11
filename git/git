@@ -1,0 +1,121 @@
+#初始配置
+git config --global user.name 'yonghu'
+git config --global user.email 'yonghu@qq.com'
+git config --global color.ui true                   #语法高亮
+
+#初始化工作目录
+mkdir data
+cd data
+git init                #初始化仓库 把一个目录初始化为GIT仓库
+-------------------------------------------------------------
+git status              #查看当前仓库状态
+git add file            #添加文件到暂存区 
+git add .               #添加当前目录所有文件到暂存区默认会递归
+git commit -m ""        #添加暂存区的文件到本地文件，不接文件默认提交所有 -m ：message的意思 自定义的提交信息,每一次commit相当于做了一次快照
+git mv a a.txt          #吧工作区和暂存区的文件同时修改文件名称，改完记得commit提交 不用接文件名
+git diff                #默认比对工作目录和暂存区有什么不同
+git diff --cached       #比对暂存区域和本地仓库有什么不同    
+git commit -am ""       #提交已经被仓库管理的文件(之前有过add的操作)
+git log                 #查看历史commit记录
+git log --oneline       #一行显示简单的commit信息
+git log --oneline  --decorate #显示当前的指针指向那个快照及分支(commit)
+git log -p              #显示具体内容的变化
+git log -1 -p           #显示最新一次的具体变更 
+git reset --hard hash   #回滚到某一次提交--hard 后接commit的hash值
+git reflog              #显示所有的commit reset日志 ，reset后git log是不显示相对当前版本的未来版本日志的
+git branch              #查看所有分支
+git branch aaa          #新建aaa分支
+git checkout aaa        #切换到aaa分支
+git checkout -b aaa     #创建并切换到aaa分支，会创建一份master的全拷贝
+git checkout -d aaa     #删除aaa分支 ，删分支的时候不能在待删除需切换到别的分支
+git merge aaa           #合并分支aaa到master 必须在master分支                
+git tag                 #查看现有标签
+git tag -a v1.0 -m ""   #为当前commit打标签 -a指定标签名 -m 指定说明 message 
+git tag -d v1.0         #删除标签 
+git show  v1.0          #查看标签信息
+git reset --hard tag    #根据tag值回滚
+git clone               #拉取远程仓库代码
+#github  
+git remote add origin dizhi #添加远程仓库 名称为origin
+git remote                  # 查看当前的远程仓库
+git push -u origin master   #将本地master 仓库推送到远程仓库origin
+
+#使用ssh 将服务器公钥复制在GitHub用户>seting>SSHandGPGkeys>ssh key>
+#使用httpsmo模式 和ssh基本相同 只需将地址换成https地址 需要https 验证参考 http://www.sohu.com/a/299289832_120104382
+
+
+
+包网 博纳 凯基 lY 全民 前台 后台 抓票
+sudo su
+exit
+userdel -r gonggong
+
+
+
+    
+#冲突合并  当需要和并的分支和主分支有冲突时 需要手动操作 直接编辑有冲突的文件 留下需要保留的内容然后commit，保持仓库clean
+
+
+
+
+
+ 
+#删除文件
+1先从暂存区撤回再删除
+git rm --cached <file>
+2直接删除，同时删除暂存区的和工作目录下的文件
+git rm -f <file> 
+#如果出现删除问题直接删除文件
+
+#隐藏文件介绍
+branches                #分支目录
+config                  #定义项目特有的配置选项 
+description             #仅供git web程序使用 
+HEAD                    #指示当前的分支 
+hooks                   #包含git钩子文件
+info                    #包含一个全局排除文件(exclude文件) 
+objects                 #存放所有数据内容, 有info和pack两个子文件夹
+refs                    #存放指向数据分支的提交对象指针 
+index                   #存放暂存区信息 git init的时候不会生成 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
