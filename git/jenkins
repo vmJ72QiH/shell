@@ -6,28 +6,30 @@ jenkins2.204 服务器
 密码：Oracle123
 这个账号可以用
 
----------------------------------------安装java环境---------------------------------------
-mkdir /usr/local/java/
-将下载的包解压到/usr/local/java/
-tar -zxvf jdk-8u231-linux-x64.tar.gz -C /usr/local/java/
-cd /usr/local/java/
-ln -s jdk1.8.0_231/bin/java /usr/bin/java
+|---------------------------------------安装java环境---------------------------------------|
+|      mkdir /usr/local/java/                                                              |
+|      #将下载的包解压到/usr/local/java/                                                   |
+|      tar -zxvf jdk-8u231-linux-x64.tar.gz -C /usr/local/java/                            |
+|      cd /usr/local/java/                                                                 |
+|      ln -s jdk1.8.0_231/bin/java /usr/bin/java                                           |
+|      																					   |
+|      vim /etc/profile #在末尾添加                                                        |
+|      																					   |
+|      export JAVA_HOME=/usr/local/java/jdk1.8.0_231                                       |
+|      export JRE_HOME=${JAVA_HOME}/jre                                                    |
+|      export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib                                 |
+|      export PATH=${JAVA_HOME}/bin:$PATH                                                  |
+|      																					   |
+|      #然后source                                                                         |
+|      source /etc/profile                                                                 |
+|      																					   |
+|      #创建软连接                                                                         |
+|      ln -s /usr/local/java/jdk1.8.0_231/bin/java /usr/bin/java                           |
+|      																					   |
+|      #检查                                                                               |
+|      java -version                                                                       |
+|---------------------------------------安装java环境---------------------------------------|
 
-vim /etc/profile #在末尾添加
-
-export JAVA_HOME=/usr/local/java/jdk1.8.0_231
-export JRE_HOME=${JAVA_HOME}/jre
-export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
-export PATH=${JAVA_HOME}/bin:$PATH
-
-然后source
-source /etc/profile
-
-创建软连接
-ln -s /usr/local/java/jdk1.8.0_231/bin/java /usr/bin/java
-
-检查
-java -version
 1.安装
 第一种方法
 sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
@@ -45,6 +47,7 @@ rpm -ivh jenkins-2.204.1-1.1.noarch.rpm
 #升级的话可以用war包的模式 将新版本的war包丢到/usr/lib/jenkins 就可以
 ***如果用默认配置启动的话 运行用户是Jenkins 不想麻烦可以在/etc/sysconfig/jenkins 里修改启动用户为root
 ***需要将jenkins服务器的公钥发送到git服务器 测试使用的是root用户的公钥，对接gitlab还要将ssh公钥添加到用户设置里面去，
+***结合gitlab使用需要下载gitlab插件 在插件管理里搜索gitlab安装gitlab && gitlabhook
 systemctl start jenkins
 
 成功启动后web登录按提示下一步 插件安装可以选择安装推荐的插件
@@ -60,6 +63,10 @@ candidates="
 /usr/lib/jvm/java-1.7.0/bin/java
 /usr/lib/jvm/jre-1.7.0/bin/java
 /usr/bin/java
+---------------------------------------配置Jenkins+gitlab相关报错---------------------------------------
+解决 Url is blocked: Requests to the local network are not allowed
+Admin area => Settings => Network ，然后点击 Outbound requests 右边 的“expand”按钮 
+在outbound request 里勾选所有并新增本地ip白名单然后保存
 
 
 

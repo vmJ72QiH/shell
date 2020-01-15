@@ -45,13 +45,6 @@ git push -u origin master   #将本地master 仓库推送到远程仓库origin
 
 
 
-包网 博纳 凯基 lY 全民 前台 后台 抓票
-sudo su
-exit
-userdel -r gonggong
-
-
-
     
 #冲突合并  当需要和并的分支和主分支有冲突时 需要手动操作 直接编辑有冲突的文件 留下需要保留的内容然后commit，保持仓库clean
 
