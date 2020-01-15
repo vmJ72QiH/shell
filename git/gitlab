@@ -9,6 +9,14 @@ gitlab-ctl status
 
 #ssh-keygen -t rsa 生成ssh秘钥
 #首次登陆要设置密码 默认用户为root
+#其他用户用ssh也要做自己的秘钥，git config --global相关设置
+
+#win10上传代码到gitlab 需要下载git bash 官网https://git-scm.com/downloads
+#打开git bash 配置ssh key 和linux一样 如果没有~./ssh目录需要手动建一个
+#本机的ssh-key
+#ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC2Vonup2B5I9Nbfi/XCF/ApQGwHCqR3eGXq046NlFu3g5JmVfMOvcYCEqC1ITpoR3fhmMKL1/cZjZzeYSUCFQxqke+KOREwrFnTcObPsL/RHOIPTkyP8taxXnGtR9peaB4wkUaDkrY813MkdjBpv8m2JIEYK/OLjQz9wR53/AYsuqOFpc+3oDO0usTrJDbF0FbDFeniBXd7QiJ2e1csXjtOTCCq816Z2exxUcGyxFniHbk+EiiS8SeVxd3RJGM45dYTX0IneTdbxH0zQMqlhcEKYIABUm3maOXXdYHkaHsZ2WRxyUiB1wfPc7zYkCNSZ854ulLFPli9GEHOPq5GV7oguAM1ryqFX8yfF3QA25sUsmBmjQk8wPB9bhQvXML4Ad2sg+9XHUJ5/+n/+fUFDDmu4AeXbQhD+WdWvEuopoujZfik6W4mo3yBqems8k4v71l6nwG9Bh/ECHy895iQwAABcsgz+ODFT2QyUk8tExDWnANxlRLQYs3mI8FfnliPjc= jojo@DESKTOP-6QL96TD
+
+#设置的普通用户jojo 密码123456789
 
 
 登录页内容设置
@@ -26,9 +34,9 @@ Admin Area>Appearance>Sign in/Sign up pages
 		 git push -u origin master
 		 
 		 
-限制注册 Admin Area>setting>Sign-up restrictions
-
-
+限制注册 Admin Area>setting>Sign-up restrictions>EXpand
+保护master分支  Admin Area>poject>setting>Repository>Protected Branches>Expand>branch:master,allowed to merge:master,allow to push:master>
+12.6.3版本gitlab master分支默认受保护
 
 
 
