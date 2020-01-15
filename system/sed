@@ -7,3 +7,4 @@ ls *.txt | sed 's/.*txt/mv & aaa/g'  | bash # 将文件名整合成命令 调用
 c的用法：替换匹配行一整行为新的内容
 sed '$a111\n222\n333.33' person.txt # 插入多行
 -r 扩展正则
+sed -n '/^$\|^#/!p' /etc/sysconfig/jenkins  #sed 去除文件注释及空白行
