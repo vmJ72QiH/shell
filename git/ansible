@@ -11,7 +11,8 @@ git clone https://github.com/ansible/ansible.git
 
 ansible2.5 + python3.6 centos7
 ------------------------------------------------------python3.6安装------------------------------------------------------
-yum install libffi-devel -y
+安装升级python时该装的依赖一个都不要少，常见 gcc glibc zlib-devel openssl-devel
+yum install libffi-devel gcc glibc zlib-devel openssl-devel -y
 wget https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tar.xz
 tar -xf Python-3.8.1.tar.xz
 ./configure --prefix=/usr/local --with-ensurepip=install --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib"

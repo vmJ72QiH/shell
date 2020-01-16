@@ -24,23 +24,68 @@ test.example.com                  #目标部署服务器主机名或IP地址
 [testservers:vars]                #server组列表参数，变量声明，已下是目标主机k/v参数
 server_name=test.example.com      
 user=root                         
-output=/root/test/txt             
+output=/root/test.txt             
 
 
 主任务文件main.yml
 ***yml格式需要特别注意
-- name:Print some message
-  shell:"echo 'currently {{ user }} is logining {{ server_name }}' > {{ output }}"
+- name: Print some message
+  shell: "echo 'currently {{ user }} is logining {{ server_name }}' > {{ output }}"
   
   
 任务入口文件deploy.yml
-- host:"testservers"          #server列表
-  gather_facts:true           #获取server基本信息
-  remote_user:root            #指定目标服务器系统用户
+- hosts: "testservers"          #server列表
+  gather_facts: true           #获取server基本信息
+  remote_user: root            #指定目标服务器系统用户
   roles:                      
-    - testbox                 #进入roles/testbox任务目录
+    - testbox                  #进入roles/testbox任务目录
+	
+	
+(.py3-a2.5-env) [deploy@localhost test_playbooks]$ tree .
+.
+├── depoly.yml
+├── inventory
+│   └── testenv
+└── roles
+    └── testbox
+        └── tasks
+            └── main.yml
+
 	
 执行playbooks
 默认的ansible invetory是/etc/hosts文件,可以通过ANSIBLE_HOSTS环境变量或者通过运行命令的时候加上-i,
 不用-i 指定默认使用/etc/hosts文件
 ansible-playbook -i inventory/testenv ./deploy.yml	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
