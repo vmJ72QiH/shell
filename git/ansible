@@ -1,0 +1,72 @@
+ansible
+配置Python环境并与系统Python隔离 确保ansible在独立的Python环境下正常稳定的运行
+
+如果ansible服务器是独立的 不做其他用途可以使用yum安装,yum安装的缺点就是Python模块的管理会因为非ansible项目的加入而变得混乱
+yum install -y ansible
+
+GIT安装（推荐）
+git clone https://github.com/ansible/ansible.git
+环境 需要安装git
+---------------------------------------------------------------------------------
+
+ansible2.5 + python3.6 centos7
+------------------------------------------------------python3.6安装------------------------------------------------------
+yum install libffi-devel -y
+wget https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tar.xz
+tar -xf Python-3.8.1.tar.xz
+./configure --prefix=/usr/local --with-ensurepip=install --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib"
+make && make altinstall
+#pip3.8 install virtualenv
+pip3.8 install virtualenv -i http://pypi.douban.com/simple/ --trusted-host pypi.douban.com
+#pip可以做软连接  这里就不做了
+#ln -s /usr/local/bin/pip3.8 /usr/local/bin/pip
+
+创建ansible账户并安装Python3.6版本virtualenv实例
+
+useradd deploy && su - deploy
+#-p参数指定系统的Python版本
+virtualenv -p /usr/local/bin/python3.8 .py3-a2.5-env  
+git clone https://github.com/ansible/ansible.git
+source .py3-a2.5-env/bin/activate
+pip3.8 install paramiko PyYAML jinja2 -i http://pypi.douban.com/simple/ --trusted-host pypi.douban.com
+mv ansible .py3-a2.5-env/
+cd .py3-a2.5-env/ansibl
+git checkout stable-2.5
+source hacking/env-setup -q
+ansible --version
+
+------------------------------------------------------安装问题汇总------------------------------------------------------
+修改pip安装源加快python模块安装
+https://blog.csdn.net/u012592062/article/details/51966649
+临时解决方法
+pip install virtualenv -i http://pypi.douban.com/simple/ --trusted-host pypi.douban.com
+
+install 除了做 altinstall 外还会做 bininstall , maninstall 共三个动作，
+bininstall 就是在处理 Symbolic Link Chain 的相关事务, 
+而 maninstall 则是在产生 unversioned manual pages, 
+所以, 很明显的, 不使用 bininstall 可以避免 python install 时 update link 的问题。
+如果使用make install，你将会看到在系统中有两个不同版本的Python在/usr/bin/目录中。
+这将会导致很多问题，而且不好处理
+
+--enable-shared
+启用共享，方便其他依赖python的一些内置库（比如 mysqlclient) 的资源的正常安装； 不启用可能报以下错误
+command 'gcc' failed with exit status 
+在 pyinstaller python打包时，也需要开启 --enable-share
+开启后会报 找不到so的错误 解决如下
+echo "/opt/python3.7/lib/" >> /etc/ld.so.conf
+ldconfig
+详细参考  https://blog.csdn.net/whatday/article/details/98052518 
+--enable-optimizations 是优化选项(LTO，PGO 等)加上这个 flag 编译后，性能有 10% 左右的优化
+
+MAKEFILE选项
+CFLAGS 表示用于 C 编译器的选项
+CXXFLAGS 表示用于 C++ 编译器的选项。
+这两个变量实际上涵盖了编译和汇编两个步骤
+CFLAGS： 指定头文件（.h文件）的路径，如：CFLAGS=-I/usr/include -I/path/include。同样地，安装一个包时会在安装路径下建立一个include目录，当安装过程中出现问题时，试着把以前安装的包的include目录加入到该变量中来
+LDFLAGS：gcc 等编译器会用到的一些优化参数，也可以在里面指定库文件的位置。用法：LDFLAGS=-L/usr/lib -L/path/to/your/lib。每安装一个包都几乎一定的会在安装目录里建立一个lib目录。如果明明安装了某个包，而安装另一个包时，它愣是说找不到，可以抒那个包的lib路径加入的LDFALGS中试一下
+LIBS：告诉链接器要链接哪些库文件，如LIBS = -lpthread -licon
+简单地说，LDFLAGS是告诉链接器从哪里寻找库文件，而LIBS是告诉链接器要链接哪些库文件。不过使用时链接阶段这两个参数都会加上，所以你即使将这两个的值互换，也没有问题
+有时候LDFLAGS指定-L虽然能让链接器找到库进行链接，但是运行时链接器却找不到这个库，如果要让软件运行时库文件的路径也得到扩展，那么我们需要增加这两个库给"-Wl,R"：
+LDFLAGS = -L/var/xxx/lib -L/opt/mysql/lib -Wl,R/var/xxx/lib -Wl,R/opt/mysql/lib
+如果在执行./configure以前设置环境变量export LDFLAGS="-L/var/xxx/lib -L/opt/mysql/lib -Wl,R/var/xxx/lib -Wl,R/opt/mysql/lib" ，注意设置环境变量等号两边不可以有空格，而且要加上引号（shell的用法）。那么执行configure以后，Makefile将会设置这个选项，链接时会有这个参数，编译出来的可执行程序的库文件搜索路径就得到扩展了。
+------------------------------------------------------------------------------------------------------------
