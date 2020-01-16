@@ -8,9 +8,12 @@ GIT安装（推荐）
 git clone https://github.com/ansible/ansible.git
 环境 需要安装git
 ---------------------------------------------------------------------------------
-
-ansible2.5 + python3.6 centos7
+Python3.8安装依赖openssl版本至少是1.1及以上，先yum update
+ansible2.5 + python3.8 centos7
 ------------------------------------------------------python3.6安装------------------------------------------------------
+
+https://www.linuxidc.com/Linux/2019-08/160311.htm 安装参考
+https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/
 安装升级python时该装的依赖一个都不要少，常见 gcc glibc zlib-devel openssl-devel
 yum install libffi-devel gcc glibc zlib-devel openssl-devel -y
 wget https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tar.xz
@@ -38,7 +41,20 @@ ansible --version
 
 ***每次用记得
 source .py3-a2.5-env/bin/activate
-source hacking/env-setup -q
+source .py3-a2.5-env/ansible/hacking/env-setup -q
+
+-----------------------------------------------------libssl---------------------------------------------------
+mv /usr/bin/openssl /usr/bin/openssl.bak
+mv /usr/include/openssl /usr/include/openssl.bak
+ln -s /usr/local/lib/bin/openssl /usr/bin/openssl
+ln -s /usr/local/lib/include/openssl /usr/include/openssl
+cd /etc/ld.so.conf.d/
+vim libssl.conf 
+ldconfig -v
+修改Python-3.8.1/Modules/Setup
+SSL的四行注释取消并修改路径
+最后解决无法编译居然是yum update
+
 ------------------------------------------------------安装问题汇总------------------------------------------------------
 修改pip安装源加快python模块安装
 https://blog.csdn.net/u012592062/article/details/51966649
@@ -73,4 +89,73 @@ LIBS：告诉链接器要链接哪些库文件，如LIBS = -lpthread -licon
 有时候LDFLAGS指定-L虽然能让链接器找到库进行链接，但是运行时链接器却找不到这个库，如果要让软件运行时库文件的路径也得到扩展，那么我们需要增加这两个库给"-Wl,R"：
 LDFLAGS = -L/var/xxx/lib -L/opt/mysql/lib -Wl,R/var/xxx/lib -Wl,R/opt/mysql/lib
 如果在执行./configure以前设置环境变量export LDFLAGS="-L/var/xxx/lib -L/opt/mysql/lib -Wl,R/var/xxx/lib -Wl,R/opt/mysql/lib" ，注意设置环境变量等号两边不可以有空格，而且要加上引号（shell的用法）。那么执行configure以后，Makefile将会设置这个选项，链接时会有这个参数，编译出来的可执行程序的库文件搜索路径就得到扩展了。
+
+
+python3.7安装（解决ssl的问题）参考
+
+1) 安装准备
+
+yum -y install zlib zlib-devel
+yum -y install bzip2 bzip2-devel
+yum -y install ncurses ncurses-devel
+yum -y install readline readline-devel
+yum -y install openssl openssl-devel
+yum -y install openssl-static
+yum -y install xz lzma xz-devel
+yum -y install sqlite sqlite-devel
+yum -y install gdbm gdbm-devel
+yum -y install tk tk-devel
+
+2) 安装libressl代替openssl-devel
+由于系统的openssl是1.0.1的版本，对于python3.7太老了，需要更新为openssl1.0.2或者libressl2.64(不含)以后的版本，所以这里从libressl官网下载libressl源码，编译生成库文件代替系统的openssl1.0.1
+
+进入解压后的目录libressl-2.8.0
+
+运行： ./config –prefix=/usr/local/ssl
+make
+make intall
+
+mv /usr/bin/openssl /usr/bin/openssl.bak
+mv /usr/include/openssl /usr/include/openssl.bak
+ln -s /usr/local/ssl/bin/openssl /usr/bin/openssl
+ln -s /usr/local/ssl/include/openssl /usr/include/openssl
+
+cd /etc/ld.so.conf.d
+新建文件
+vim libressl-2.8.0.conf
+#将以下行加入文件，并保存
+/usr/local/ssl/lib
+
+ldconfig -v #重新加载库文件
+
+验证是否安装完成
+[root@testmachine hadoop_software]# openssl version
+LibreSSL 2.8.0
+
+3) 安装python3.7
+从官网下载python3.7的源码，
+解压后进入Python-3.7.0
+
+编译前需要设置环境变量（重要）
+export LDFLAGS=”-L/usr/local/ssl/lib”
+export CPPFLAGS=”-I/usr/local/ssl/include”
+export PKG_CONFIG_PATH=”/usr/local/ssl/lib/pkgconfig”
+
+./configure –prefix=/usr/python –enable-shared CFLAGS=-fPIC
+运行后会出现一堆信息：
+注意最后的ssl检查，如下图所示：
+
+如果ssl版本太旧或者编译前没有设置ssl的环境变量，这里是检测不到ssl的，安装完成后的pip3是无法使用的，这点非常关键！
+
+检测通过后，运行
+make
+make install
+
+ln -s /usr/python/bin/python3 /usr/bin/python3
+ln -s /usr/python/bin/pip3 /usr/bin/pip3
+
+验证python 安装正确
+
+import ssl没有报错
+
 ------------------------------------------------------------------------------------------------------------
