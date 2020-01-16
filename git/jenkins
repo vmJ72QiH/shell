@@ -68,6 +68,10 @@ candidates="
 Admin area => Settings => Network ，然后点击 Outbound requests 右边 的“expand”按钮 
 在outbound request 里勾选所有并新增本地ip白名单然后保存
 
+#Python项目构建参考
+http://www.imooc.com/article/284434
+#go项目构建参考
+https://www.cnblogs.com/weifeng1463/p/8671368.html
 
 
 
