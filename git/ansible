@@ -33,8 +33,11 @@ mv ansible .py3-a2.5-env/
 cd .py3-a2.5-env/ansibl
 git checkout stable-2.5
 source hacking/env-setup -q
-ansible --version
+ansible --version 
 
+***每次用记得
+source .py3-a2.5-env/bin/activate
+source hacking/env-setup -q
 ------------------------------------------------------安装问题汇总------------------------------------------------------
 修改pip安装源加快python模块安装
 https://blog.csdn.net/u012592062/article/details/51966649
