@@ -34,7 +34,7 @@ jenkins2.204 服务器
 第一种方法
 sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
 sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-yum install jenkins
+yum install jenkins -y
 
 第二种方法
 直接下载 rpm 安装
