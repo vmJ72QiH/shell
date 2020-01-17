@@ -64,6 +64,9 @@ command/shell 模块
 command不能使用> 
 shell可以（推荐使用）
 
+ansible中文文档
+http://www.ansible.com.cn/docs/playbooks_intro.html
+
 
 
 
