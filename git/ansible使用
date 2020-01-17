@@ -60,6 +60,10 @@ ansible-playbook -i inventory/testenv ./deploy.yml
 
 
 
+command/shell 模块
+command不能使用> 
+shell可以（推荐使用）
+
 
 
 
