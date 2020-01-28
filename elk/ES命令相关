@@ -1,0 +1,4 @@
+ES相关操作
+
+curl -X PUT 127.0.0.1:9200/test   
+curl -X PUT 127.0.0.1:9200/test?pretty            #pretty的参数含义是 格式化显示返回

@@ -3,3 +3,6 @@ es jvm设置建议
 2 最大最小内存设置一样大
 3 配置文件设置锁定内存           #bootstrap.memory_lock = true
 4 至少给服务器本身空余50%的内存
+
+
+#启动报错 mem is locking but lock faild 参照官方文档的解决方式
