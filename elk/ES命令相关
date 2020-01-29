@@ -1,4 +1,15 @@
 ES相关操作
-
-curl -X PUT 127.0.0.1:9200/test   
+索引相当于mysql的库
+curl -X PUT 127.0.0.1:9200/test                   #创建test索引
 curl -X PUT 127.0.0.1:9200/test?pretty            #pretty的参数含义是 格式化显示返回
+
+
+锦上添花 guard
+
+
+
+ 
+ 
+ 
+ 
+ 
