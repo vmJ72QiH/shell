@@ -6,3 +6,14 @@ es jvm设置建议
 
 
 #启动报错 mem is locking but lock faild 参照官方文档的解决方式
+https://www.elastic.co/guide/en/elasticsearch/reference/current/setting-system-settings.html#systemd
+To override them, add a file called /etc/systemd/system/elasticsearch.service.d/override.conf 
+(alternatively, you may run sudo systemctl edit elasticsearch which opens the file automatically inside your default editor). 
+Set any changes in this file, such as:
+
+[Service]
+LimitMEMLOCK=infinity
+Once finished, run the following command to reload units:
+
+sudo systemctl daemon-reload
+

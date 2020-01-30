@@ -4,12 +4,33 @@ curl -X PUT 127.0.0.1:9200/test                   #创建test索引
 curl -X PUT 127.0.0.1:9200/test?pretty            #pretty的参数含义是 格式化显示返回
 
 
-锦上添花 guard
+ES官方优化建议
+https://www.elastic.co/guide/en/elasticsearch/reference/current/system-config.html
+
+锦上添花 search guard
+
+ES中文分词器
+https://github.com/medcl/elasticsearch-analysis-ik
+安装已插件的形式装(所有节点都要装)
+elasticsearch-plugin install 压缩包URL
+使用条件:在创建索引的时候需要选择中文分词器(需新建索引)
+
+elasticsearch-dump 
+导入导出数据工具
+
+Python 操作elasticsearch
+pypi.prg/project/elasticsearch
+ 
+ 
+跨机房多集群防脑裂(不是跨机房就用第一个)
+discovery.zen.minimum_master_nodes:2
+discovery.zen.fd.ping_interval: 10s
+discovery.zen.fd.ping_timeout: 60s
+discovery.zen.fd.ping_retries: 6
 
 
+2个节点 master设置为2的时候一台故障导致集群不可用
+注释或设置为1
+discovery.zen.minimum_master_nodes:1
+重启服务
 
- 
- 
- 
- 
- 
