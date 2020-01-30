@@ -34,3 +34,7 @@ discovery.zen.fd.ping_retries: 6
 discovery.zen.minimum_master_nodes:1
 重启服务
 
+分片一旦设置就无法变更
+
+discovery.zen.minimum_master_nodes:2   #计算公式  master/2 + 1  (master为可能成为主节点的个数) 结果区整数
+
