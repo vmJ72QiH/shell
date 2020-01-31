@@ -38,3 +38,4 @@ discovery.zen.minimum_master_nodes:1
 
 discovery.zen.minimum_master_nodes:2   #计算公式  master/2 + 1  (master为可能成为主节点的个数) 结果区整数
 
+天坑：每个版本的内置变量的值可能不一样 配置还是要参考官方对应版本的文档
