@@ -5,3 +5,95 @@
 	使用冒号时后面要有空格信息
 	已冒号结尾,冒号信息出现在注释说明中时后面不用加空格
 3. 短横线使用 短横线表示列表 后面需要有空格
+
+
+setup可以显示被管理服务器的详细信息
+
+剧本放在一个目录里
+剧本名已yml或yaml结尾
+
+执行剧本
+ansible-playbook file
+检测剧本的语法是否正确 
+ansible-playbook --syntax-check file
+模拟执行剧本
+-C
+
+剧本内容
+一个name下只能写一个动作模块任务
+register 注册信息
+register可以在name下的模块后 
+例如 
+- name: dasda
+  shell: echo 123
+  reegister: dsada
+
+判断模块 when
+标签功能 tags 不要单独用数字表示
+循环模块 with_iteams
+
+notify: 通知 在上一步操作是有change状态的时候才会执行  发送一个信息与触发器关联
+handlers: 级别与tasks同级 接受notify的信息 下面的- name的值要和对应notify的一致
+
+gather_facts: no 可以加速剧本执行速度
+
+vars变量优先级 命令行>剧本中变量设置>主机清单变量设置
+roles全局变量
+
+常用模块
+command 默认模块
+shell
+script
+copy
+fetch
+file
+yum
+service
+user
+mount
+cron
+ping
+
+ad-hoc 临时实现批量管理(ansible 命令行模式 就是直接用ansible 命令)
+
+
+
+
+多个剧本整合的方法
+一
+	写一个汇总剧本
+	- host: all
+	  tasks:
+	    - include_tasks: f1.yaml
+		- include_tasks: f2.yaml
+注意:f1.yaml f2.yaml需要调整- hosts参数 
+二
+	直接在新文件里用include或者import_playbook
+	- include: f1.yaml
+	- include: f2.yaml
+三	
+	- import_playbook: f1.yaml
+	- import_playbook: f2.yaml
+
+
+
+以roles编写剧本
+在 /etc/ansible/roles
+mkdir http nginx -- 创建相应角色目录
+mkdir http/vars,tasks,handlers  --创建对应的子目录 (名称是固定的 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
