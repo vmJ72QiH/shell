@@ -1,0 +1,15 @@
+关闭大页内存
+vi /etc/rc.local
+if test -f /sys/kernel/mm/transparent_hugepage/enabled; then
+  echo never > /sys/kernel/mm/transparent_hugepage/enabled
+fi
+if test -f /sys/kernel/mm/transparent_hugepage/defrag; then
+  echo never > /sys/kernel/mm/transparent_hugepage/defrag
+fi
+--------------------------------------------------------
+临时关闭
+echo never > /sys/kernel/mm/transparent_hugepage/enabled
+echo never > /sys/kernel/mm/transparent_hugepage/defrag
+
+----------'其他系统关闭
+https://docs.mongodb.com/manual/tutorial/transparent-huge-pages
