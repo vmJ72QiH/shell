@@ -13,3 +13,7 @@ echo never > /sys/kernel/mm/transparent_hugepage/defrag
 
 ----------'其他系统关闭
 https://docs.mongodb.com/manual/tutorial/transparent-huge-pages
+
+
+批量插入数据
+for(i=0;i<1000;i++){db.log.insert({"uid":i,"name": "adsa"})}
