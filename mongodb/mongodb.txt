@@ -17,3 +17,152 @@ https://docs.mongodb.com/manual/tutorial/transparent-huge-pages
 
 批量插入数据
 for(i=0;i<1000;i++){db.log.insert({"uid":i,"name": "adsa"})}
+
+rs.status()                   查看集合状态
+rs.isMaster()                 查看当前是否为主节点
+rs.conf()                     查看集合配置信息
+rs.remove("ip:port")          删除一个节点
+rs.add("ip:port")             新增一个从节点
+rs.addArb("ip:port")          新增冲裁节点
+
+设置集合
+-----------------------------------------
+1主2从
+mongo --port 28017 admin
+config = {_id: '集合名',membears: [
+		{_id:0, host: 'ip:port'},
+		{_id:1, host: 'ip:port'},
+		{_id:2, host: 'ip:port'}]
+}
+rs.initiate(config)
+
+如果要把其中一个变更为arbiter 需要先删除该节点然后再将该节点新增为arbiter节点
+
+-----------------------------------------
+
+1主1从1arbiter(选举服务器)
+mongo --port 28017 admin
+config = {_id: '集合名',membears: [
+		{_id:0, host: 'ip:port'},
+		{_id:1, host: 'ip:port'},
+		{_id:2, host: 'ip:port'},"arbiterOnly":ture]
+}
+rs.initiate(config)
+
+--------------------------------------------
+特殊从节点 
+	延时从节点
+	影藏节点(hidden,priorty=0 不参与选举) 一般即是影藏又是延时
+
+
+arbiter节点 主要负责选主过程中的投票不存数据也不提供服务
+hidden节点 影藏节点不参与选主也不对外提供服务
+delay节点  延时节点  数据落后主库一段时间 因为数据是延时的 也不应该提供服务或参与选主 所以通常会配合hidden
+
+配置延时节点
+cfg=rs.conf()
+cfg.members[2].priority=0  #[]的里的数字为 cfg 值的主机索引 从0开始 和 _id无关
+cfg.members[2].hidden=true
+cfg.members[2].slaveDelay=0
+rs.reconfig=(cfg)
+
+取消以上配置
+
+cfg=rs.conf()
+cfg.members[2].priority=1 
+cfg.members[2].hidden=false
+cfg.members[2].slaveDelay=1
+rs.reconfig=(cfg)
+
+
+
+
+从库默认是不可读不可写的
+rs.slaveOk() 后可以读写
+
+
+分片
+
+配置
+
+激活分片功能
+db.runCommand({ enablesharding : "test"})      #test是库名
+
+range分片  : 指定分片键对集合分片
+
+hash分片
+
+
+
+
+balance 业务期间不要做 数据备份期间也不要做
+定制自动平衡进行的时间段
+
+use config
+sh.setBalancerState(true)
+db.settings.update({_id:"balance"}, {$set:{ activeWindow : { start: "3:00", stop:"5:00"}}}, true)
+sh.getBalancerWindow()
+
+
+备份恢复
+	工具 mongoexport/mongoimport  导入导出是json,csv
+	     mongodump/mongorestore   导入导出是bson(二进制json格式,体积小)
+		 
+跨版本数据迁移用json 跨数据库一般用csv,json数据不保留索引
+
+日常备份用mongodump/mongorestore
+
+
+ mongodump/mongorestore  (集群的备份恢复 --oplog)
+ 
+ rs.printReplicationInfo() 查看oplog的信息
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
